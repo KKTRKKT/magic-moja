@@ -1,6 +1,9 @@
 package me.kktrkkt;
 
+import com.google.auto.service.AutoService;
+
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
@@ -10,7 +13,8 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
 
-public class MagicProccessor extends AbstractProcessor {
+@AutoService(Processor.class)
+public class MagicProcessor extends AbstractProcessor {
 
     // 프로세서가 처리할 애노테이션 목록을 설정한다
     @Override
