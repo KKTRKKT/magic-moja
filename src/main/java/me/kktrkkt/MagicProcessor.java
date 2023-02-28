@@ -45,21 +45,25 @@ public class MagicProcessor extends AbstractProcessor {
                 processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Proccessing " + simpleName);
             }
 
+            // element를 TypeElement로 변환하면, ClassName을 얻을 수 있다.
             TypeElement typeElement = (TypeElement) element;
             ClassName className = ClassName.get(typeElement);
 
+            // 메소드 생성
             MethodSpec pullOut = MethodSpec.methodBuilder("pullOut")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(String.class)
                     .addStatement("return $S", "Rabbit!")
                     .build();
 
+            // 클래스 생성
             TypeSpec magicMoja = TypeSpec.classBuilder("MagicMoja")
                     .addModifiers(Modifier.PUBLIC)
                     .addSuperinterface(className)
                     .addMethod(pullOut)
                     .build();
 
+            // 생성한 클래스를 파일로 저장한다.
             Filer filer = processingEnv.getFiler();
             try {
                 JavaFile.builder(className.packageName(), magicMoja)
