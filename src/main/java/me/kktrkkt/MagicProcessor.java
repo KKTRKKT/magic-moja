@@ -45,6 +45,9 @@ public class MagicProcessor extends AbstractProcessor {
                 processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Proccessing " + simpleName);
             }
 
+            TypeElement typeElement = (TypeElement) element;
+            ClassName className = ClassName.get(typeElement);
+
             MethodSpec pullOut = MethodSpec.methodBuilder("pullOut")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(String.class)
@@ -53,12 +56,11 @@ public class MagicProcessor extends AbstractProcessor {
 
             TypeSpec magicMoja = TypeSpec.classBuilder("MagicMoja")
                     .addModifiers(Modifier.PUBLIC)
+                    .addSuperinterface(className)
                     .addMethod(pullOut)
                     .build();
 
             Filer filer = processingEnv.getFiler();
-            TypeElement typeElement = (TypeElement) element;
-            ClassName className = ClassName.get(typeElement);
             try {
                 JavaFile.builder(className.packageName(), magicMoja)
                         .build()
