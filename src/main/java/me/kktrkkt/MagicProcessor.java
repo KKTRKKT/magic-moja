@@ -13,6 +13,7 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
 
+// META-INF/services 에 자동으로 Processor를 추가해준다
 @AutoService(Processor.class)
 public class MagicProcessor extends AbstractProcessor {
 
